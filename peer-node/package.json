@@ -1,11 +1,11 @@
 {
-  "name": "master-node",
+  "name": "peer-node",
   "version": "1.0.0",
-  "description": "Master node with Orbit DB",
-  "main": "master-node.js",
+  "description": "Peer node with Orbit DB",
+  "main": "peer-node.js",
   "scripts": {
     "test": "echo no test",
-    "start": "node master-node.js"
+    "start": "node peer-node.js"
   },
   "author": "",
   "license": "MIT",

@@ -4,8 +4,10 @@
 */
 
 // Customize these variables.
-const INIT_DB = false;
-const DB_NAME = "test1003";
+const MASTER_NODE =
+  "/ip4/127.0.0.1/tcp/5100/p2p/QmZ1WQExQmnBECZyUB4woEKo7D2G7YZErSuN7HYxGJnzS9";
+const DB_NAME =
+  "/orbitdb/zdpuAntT14Rvn25AC5rnKg79RfKGUtvm2C8ekM2x5G91J6nsy/test1003";
 
 // Public npm libraries
 const IPFS = require("ipfs");
@@ -32,7 +34,7 @@ async function start() {
           }
         },
         Addresses: {
-          Swarm: [`/ip4/0.0.0.0/tcp/${5100}`, `/ip4/0.0.0.0/tcp/${5101}/ws`]
+          Swarm: [`/ip4/0.0.0.0/tcp/${6100}`, `/ip4/0.0.0.0/tcp/${6101}/ws`]
         }
       }
     };
@@ -40,7 +42,7 @@ async function start() {
     const ipfs = await IPFS.create(ipfsOptions);
 
     // Set the 'server' profile so the node does not scan private networks.
-    await ipfs.config.profiles.apply("server");
+    // await ipfs.config.profiles.apply("server");
 
     const orbitdb = await OrbitDB.createInstance(ipfs, {
       directory: "./orbitdb/dbs/keyvalue"
@@ -57,19 +59,26 @@ async function start() {
 
     await db.load();
 
+    await ipfs.swarm.connect(MASTER_NODE);
+    console.log(`Connect to master node: ${MASTER_NODE}`);
+
     // console.log("db: ", db);
 
-    // Add data to the database.
-    if (INIT_DB) {
-      const hash1 = await db.put("one", { name: "bob" });
-      console.log(`hash1: ${hash1}`);
+    db.events.on("replicate", async (address, entry) => {
+      try {
+        console.log("replicate event fired");
+        console.log("replicate address: ", address);
+        console.log("replicate entry: ", entry);
+        console.log("db._index: ", db._index);
+      } catch (err) {
+        console.log("Error in replicate event: ", err);
+      }
+    });
 
-      const hash2 = await db.put("two", { name: "alice" });
-      console.log(`hash2: ${hash2}`);
-
-      const hash3 = await db.put("three", { name: "sam" });
-      console.log(`hash3: ${hash3}`);
-    }
+    setTimeout(function() {
+      const all = db.all;
+      console.log("all: ", all);
+    }, 7000);
   } catch (err) {
     console.log("Error in start(): ", err);
   }
