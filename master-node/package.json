@@ -1,0 +1,15 @@
+{
+  "name": "master-node",
+  "version": "1.0.0",
+  "description": "Master node with Orbit DB",
+  "main": "master-node.js",
+  "scripts": {
+    "test": "echo no test"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ipfs": "^0.55.3",
+    "orbit-db": "^0.26.1"
+  }
+}
