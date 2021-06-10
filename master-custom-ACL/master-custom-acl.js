@@ -59,7 +59,7 @@ async function start() {
     const options = {
       accessController: {
         write: ["*"],
-        type: "halfAndHalf"
+        type: "orbitdb"
       }
     };
 
