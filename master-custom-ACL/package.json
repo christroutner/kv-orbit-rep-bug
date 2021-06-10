@@ -1,0 +1,16 @@
+{
+  "name": "master-custom-acl",
+  "version": "1.0.0",
+  "description": "Master node with Orbit DB with custom ACL",
+  "main": "master-custom-acl.js",
+  "scripts": {
+    "test": "echo no test",
+    "start": "node master-custom-acl.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ipfs": "^0.55.3",
+    "orbit-db": "^0.26.1"
+  }
+}

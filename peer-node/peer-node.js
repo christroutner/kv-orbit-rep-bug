@@ -5,9 +5,9 @@
 
 // Customize these variables.
 const MASTER_NODE =
-  "/ip4/127.0.0.1/tcp/5100/p2p/QmZ1WQExQmnBECZyUB4woEKo7D2G7YZErSuN7HYxGJnzS9";
+  "/ip4/127.0.0.1/tcp/5100/p2p/QmQyUDcgx3wprSrv3qTNt1SuF4oYKy6tbSk2JnFqi3YiK3";
 const DB_NAME =
-  "/orbitdb/zdpuAntT14Rvn25AC5rnKg79RfKGUtvm2C8ekM2x5G91J6nsy/test1003";
+  "/orbitdb/zdpuAxV6JYd8dkeNc9pUVe6Z6Ea1Nr8ftduJY7M9MxR62YBFY/test1005";
 
 // Public npm libraries
 const IPFS = require("ipfs");

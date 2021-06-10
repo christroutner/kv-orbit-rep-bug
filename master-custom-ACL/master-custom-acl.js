@@ -1,15 +1,24 @@
 /*
   This is a 'master' IPFS node that generates the OrbitDB. The 'peer' node
   connects to this node and replicates the database.
+
+  This version of the master has a custom access control library (ACL).
 */
 
 // Customize these variables.
 const INIT_DB = true;
-const DB_NAME = "test1005";
+const DB_NAME = "test1004";
 
 // Public npm libraries
 const IPFS = require("ipfs");
 const OrbitDB = require("orbit-db");
+
+// Custom access controller.
+const AccessControllers = require("orbit-db-access-controllers");
+const CustomAccessController = require("./half-and-half-access-controller");
+AccessControllers.addAccessController({
+  AccessController: CustomAccessController
+});
 
 async function start() {
   try {
@@ -32,7 +41,7 @@ async function start() {
           }
         },
         Addresses: {
-          Swarm: [`/ip4/0.0.0.0/tcp/${5100}`, `/ip4/0.0.0.0/tcp/${5101}/ws`]
+          Swarm: [`/ip4/0.0.0.0/tcp/${7100}`, `/ip4/0.0.0.0/tcp/${7101}/ws`]
         }
       }
     };
@@ -43,12 +52,14 @@ async function start() {
     await ipfs.config.profiles.apply("server");
 
     const orbitdb = await OrbitDB.createInstance(ipfs, {
-      directory: "./orbitdb/dbs/keyvalue"
+      directory: "./orbitdb/dbs/keyvalue",
+      AccessControllers: AccessControllers
     });
 
     const options = {
       accessController: {
-        write: ["*"]
+        write: ["*"],
+        type: "halfAndHalf"
       }
     };
 
